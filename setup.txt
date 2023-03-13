@@ -1,0 +1,2 @@
+pip install streamlit streamlit-authenticator streamlit-option-menu plotly-express
+
