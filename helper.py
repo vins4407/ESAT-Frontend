@@ -12,7 +12,7 @@ def defaultConfig(pagesize:int=1) -> None:
     if pagesize == 0:
         st.set_page_config(layout="wide")
     elif pagesize == 1:
-        st.set_page_config(layout="centered")
+        st.set_page_config(layout="centered",page_title="E-Sat",page_icon=":zap:")
         
     hide_st_style = """
                 <style>

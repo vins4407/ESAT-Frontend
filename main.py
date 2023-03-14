@@ -5,24 +5,35 @@ from helper import hash,defaultConfig
 import plotly.express as px 
 import plotly.graph_objs as go
 import pandas as pd
-
+from services import get_userdeatils
 defaultConfig()
 
 noDataFigure = go.Figure()
 
-
 emails = ["yamen@gmail.com"]
  
 def homepage():
-    st.title("DashBoard")
+    st.title("DashBoard :chart_with_upwards_trend:")
     st.subheader(f"Welcome Yameen :wave:")
-
+    data =pd.DataFrame(get_userdeatils())
     left_column, right_column = st.columns(2)
-    left_column.plotly_chart(noDataFigure, use_container_width=True)
-    right_column.plotly_chart(noDataFigure, use_container_width=True)
-    data = pd.DataFrame(columns=["Name", "IP", "Mac", "Port","Phising","Traffic"])
+    
+    if data.empty:
+        left_column.plotly_chart(noDataFigure, use_container_width=True)
+    else:
+        open_ports = px.bar(data, x='ipaddress', y='open_ports')
+        open_ports.update_layout(title="<b>Open ports </b>")
+        left_column.plotly_chart(open_ports, use_container_width=True)   
+        
+    if data.empty:
+            right_column.plotly_chart(noDataFigure, use_container_width=True)
+    else:
+        severty_level = px.bar(data, y='ipaddress', x='open_ports',orientation="h")
+        severty_level.update_layout(title="<b>Open ports </b>")
+        right_column.plotly_chart(severty_level, use_container_width=True)   
+    print(data)
     st.table(data)
-    st.button("Save", key="save_button")
+
 
 
 credentials = {
@@ -36,19 +47,17 @@ credentials = {
     }
 }
 
-fig_hourly_sales = px.bar(orientation="h",title="<b>Sales by Product Line</b>",)
-
 noDataFigure.update_layout(
     annotations=[
         go.layout.Annotation(
-            x=2.5,
+            x=2,
             y=2,
             text="No data available",
             showarrow=False,
             font=dict(size=30)
         )
     ],
-    title="<b>Sales by Product Line</b>",
+    title="<b>No data Available</b>",
     template="plotly_white",
 )
 
