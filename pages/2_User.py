@@ -22,7 +22,7 @@ def User():
   
     st.title("Select User :dart:")
     
-    if st.button("Reset"):  
+    if st.button("Refresh"):  
         st.cache_data.clear()   
        
         

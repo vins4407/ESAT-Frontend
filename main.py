@@ -4,16 +4,42 @@ from streamlit_option_menu import option_menu
 from helper import hash,defaultConfig
 import plotly.express as px 
 import plotly.graph_objs as go
+from streamlit_lottie import st_lottie
 import pandas as pd
 from services import get_userdeatils
+import json
 defaultConfig()
 
 noDataFigure = go.Figure()
 
 emails = ["yamen@gmail.com"]
+
+def load_lottiefile(filepath: str):
+    with open(filepath, "r") as f:
+        return json.load(f)
+
  
 def homepage():
-    st.title("DashBoard :chart_with_upwards_trend:")
+    leftt,rightt=st.columns(2)
+    with leftt:
+        st.title("DashBoard :chart_with_upwards_trend:")
+        st.caption("Empower your organization with a cutting-edge security testing tool that exposes vulnerabilities and reinforces employee vigilance")
+    with rightt:
+        st_lottie(
+        load_lottiefile("./98723-search-users.json"),
+        speed=1,
+        reverse=False,
+        loop=True,
+        quality="low", # medium ; high
+        height=230,
+        width=230,
+        key=None,
+    )
+
+    # lottie_url = "https://assets5.lottiefiles.com/packages/lf20_V9t630.json"
+    # lottie_json = load_lottieurl(lottie_url)
+    # st_lottie(lottie_json,w);
+   
     st.subheader(f"Welcome Yameen :wave:")
     data =pd.DataFrame(get_userdeatils())
     left_column, right_column = st.columns(2)
@@ -29,7 +55,7 @@ def homepage():
             right_column.plotly_chart(noDataFigure, use_container_width=True)
     else:
         severty_level = px.bar(data, y='ipaddress', x='open_ports',orientation="h")
-        severty_level.update_layout(title="<b>Open ports </b>")
+        severty_level.update_layout(title="<b> Severty </b>")
         right_column.plotly_chart(severty_level, use_container_width=True)   
     print(data)
     st.table(data)
