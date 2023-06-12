@@ -1,7 +1,7 @@
 # FrontTrack for the Employee Secuirity Auditing/Awareness Tool 
 # made with STREAMLIT !
 
-![Emp Tracker](pages/home.jpg)
+![Emp Tracker](pages/4.gif)
 
 ## How to start 
 -  clone the repo 
